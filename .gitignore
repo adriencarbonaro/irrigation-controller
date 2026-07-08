@@ -1,0 +1,14 @@
+# ide config
+.vscode/
+
+# build files
+
+# auto-generated files
+
+# sdk
+
+
+# hardware
+Dossier_de_conception/
+irrigation_controller-backups
+.pdf
