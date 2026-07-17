@@ -14,7 +14,7 @@ Home Assistant controls the watering sequences
 - water inlet : one 3/4" connection, on the right side
 - water outlets : 1, 2 or 3 3/4" connection,  facing downward
 - for each outlet:
-    - a manual control button
+    - a manual control button (all 3 valves can be opened at the same time)
     - a LED that lights up when the valve is open
 
 - status LED blinks when WiFi is connected
@@ -43,10 +43,10 @@ Sequence definition : at start time, zone 1 is operated for the given duration i
 - Submerged pump 230V : Triac BT136-600
 
 Pcb design using KiCad 9
-Pcb dimensions 148 x 161 mm, 4 mounting holes (141,4 x 45 mm)
+Pcb dimensions 148 x 61 mm, 4 mounting holes (141,4 x 45 mm)
 
 
-![](./Photos/irrigation_controller.jpg)
+![](./Photos/irrigation_controller.png)
 
 ### Hydraulic
 - Inlet : 3/4" (20/27) for automatic garden connection
@@ -85,7 +85,7 @@ script :
 
 ### Home Assistant configuration
 
-All elements link to the irrigation controller are found under the label "irrigation"
+All elements linked to the irrigation controller are found under the label "irrigation"
 
 #### Device
 - add "irrigation_ctl1" in appareils & service /ESPHome"
