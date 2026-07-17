@@ -7,6 +7,13 @@
 		(legacy_teardrops no)
 	)
 	(paper "A4")
+	(title_block
+		(title "Irrigation controller - 3 channels")
+		(date "2026-07-13")
+		(rev "1.1")
+		(company "O.Carbonaro")
+		(comment 1 "1.1: minor adjustments on silkscreen")
+	)
 	(layers
 		(0 "F.Cu" signal)
 		(2 "B.Cu" signal)
@@ -38,7 +45,7 @@
 		(allow_soldermask_bridges_in_footprints no)
 		(tenting front back)
 		(pcbplotparams
-			(layerselection 0x00000000_00000000_5555555f_575d55f5)
+			(layerselection 0x00000000_00000000_5555555f_575df5f5)
 			(plot_on_all_layers_selection 0x00000000_00000000_00000000_82080021)
 			(disableapertmacros no)
 			(usegerberextensions no)
@@ -57,24 +64,24 @@
 			(pdf_front_fp_property_popups yes)
 			(pdf_back_fp_property_popups yes)
 			(pdf_metadata yes)
-			(pdf_single_document yes)
+			(pdf_single_document no)
 			(dxfpolygonmode yes)
 			(dxfimperialunits yes)
 			(dxfusepcbnewfont yes)
 			(psnegative no)
 			(psa4output no)
-			(plot_black_and_white no)
+			(plot_black_and_white yes)
 			(sketchpadsonfab no)
 			(plotpadnumbers no)
 			(hidednponfab no)
 			(sketchdnponfab yes)
 			(crossoutdnponfab yes)
 			(subtractmaskfromsilk no)
-			(outputformat 4)
+			(outputformat 1)
 			(mirror no)
-			(drillshape 2)
+			(drillshape 0)
 			(scaleselection 1)
-			(outputdirectory "")
+			(outputdirectory "./")
 		)
 	)
 	(net 0 "")
@@ -95,14 +102,14 @@
 	(net 15 "Net-(Q3-G)")
 	(net 16 "Net-(Q5-B)")
 	(net 17 "Net-(Q7-G)")
-	(net 18 "cde_EV1")
-	(net 19 "cde_EV2")
-	(net 20 "cde_EV3")
+	(net 18 "cmd_EV1")
+	(net 19 "cmd_EV2")
+	(net 20 "cmd_EV3")
 	(net 21 "SW_1")
 	(net 22 "SW_2")
 	(net 23 "SW_3")
 	(net 24 "Net-(U1-GPIO20)")
-	(net 25 "pump_cde")
+	(net 25 "pump_cmd")
 	(net 26 "Net-(R16-Pad2)")
 	(net 27 "Net-(R17-Pad1)")
 	(net 28 "unconnected-(U3-NC-Pad5)")
@@ -277,7 +284,7 @@
 			(size 1.3 1.75)
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(roundrect_rratio 0.192308)
-			(net 25 "pump_cde")
+			(net 25 "pump_cmd")
 			(pintype "passive")
 			(uuid "d3e923a8-1def-4d36-9dac-7b21ecc3c7aa")
 		)
@@ -652,7 +659,7 @@
 		(descr "JST XH series connector, B4B-XH-A (http://www.jst-mfg.com/product/pdf/eng/eXH.pdf), generated with kicad-footprint-generator")
 		(tags "connector JST XH vertical")
 		(property "Reference" "J4"
-			(at 9.37 4.95 90)
+			(at 9.37 4.95 0)
 			(layer "F.SilkS")
 			(uuid "99ce094e-7612-461e-90f5-4f574fc0468f")
 			(effects
@@ -2105,7 +2112,7 @@
 		(descr "Resistor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor handsolder")
 		(property "Reference" "R9"
-			(at 3.6 -0.2 0)
+			(at 3.8 0 0)
 			(layer "F.SilkS")
 			(uuid "4ec38dca-669a-46f2-8d6f-1b5c7d3434f4")
 			(effects
@@ -2450,7 +2457,7 @@
 			(size 1.3 1.75)
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(roundrect_rratio 0.192308)
-			(net 19 "cde_EV2")
+			(net 19 "cmd_EV2")
 			(pintype "passive")
 			(uuid "ff4592ce-0e1a-4bbc-82e9-e6e877242a33")
 		)
@@ -2483,7 +2490,7 @@
 		(descr "JST XH series connector, B4B-XH-A (http://www.jst-mfg.com/product/pdf/eng/eXH.pdf), generated with kicad-footprint-generator")
 		(tags "connector JST XH vertical")
 		(property "Reference" "J5"
-			(at -2.08 4.8 270)
+			(at -2.08 4.8 0)
 			(layer "F.SilkS")
 			(uuid "bcdea175-44a2-4fe6-96ab-3082cf8a2278")
 			(effects
@@ -3707,7 +3714,7 @@
 		(descr "Resistor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor handsolder")
 		(property "Reference" "R6"
-			(at 3.7 -1 0)
+			(at 3.8 0.1 0)
 			(layer "F.SilkS")
 			(uuid "ae07886e-eacd-4aa8-bab5-65b7a0b8b7d4")
 			(effects
@@ -4052,7 +4059,7 @@
 			(size 1.3 1.75)
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(roundrect_rratio 0.192308)
-			(net 20 "cde_EV3")
+			(net 20 "cmd_EV3")
 			(pintype "passive")
 			(uuid "b99d6856-12f6-4be2-b5e9-5e98a7d3ceb5")
 		)
@@ -4997,7 +5004,7 @@
 		(descr "Resistor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor handsolder")
 		(property "Reference" "R3"
-			(at 3.71 1.21 0)
+			(at 3.8 0 0)
 			(layer "F.SilkS")
 			(uuid "1f38d2af-98ec-4e20-b932-b5d0cd66330d")
 			(effects
@@ -5507,7 +5514,7 @@
 		(descr "Resistor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor handsolder")
 		(property "Reference" "R18"
-			(at -0.12 -2.01 90)
+			(at -0.05 -3 180)
 			(layer "F.SilkS")
 			(uuid "da9dcae3-fb4d-403a-896b-0fb4bfcb4628")
 			(effects
@@ -8838,7 +8845,7 @@
 			(drill 1)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net 18 "cde_EV1")
+			(net 18 "cmd_EV1")
 			(pinfunction "GPIO3")
 			(pintype "bidirectional")
 			(uuid "9f2c6bf2-76f5-4dcf-a77d-c8ff854a52f3")
@@ -8849,7 +8856,7 @@
 			(drill 1)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net 19 "cde_EV2")
+			(net 19 "cmd_EV2")
 			(pinfunction "GPIO4")
 			(pintype "bidirectional")
 			(uuid "761062bc-7dd7-46d3-983e-73e9b80d8949")
@@ -8860,7 +8867,7 @@
 			(drill 1)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net 20 "cde_EV3")
+			(net 20 "cmd_EV3")
 			(pinfunction "GPIO5")
 			(pintype "bidirectional")
 			(uuid "d4edc875-cb51-4c9e-a5f9-aa5e07c42823")
@@ -8871,7 +8878,7 @@
 			(drill 1)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net 25 "pump_cde")
+			(net 25 "pump_cmd")
 			(pinfunction "GPIO6")
 			(pintype "bidirectional")
 			(uuid "a9b2fdf8-a72b-4782-875d-a3a4e142be5d")
@@ -9140,7 +9147,7 @@
 			(size 1.3 1.75)
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(roundrect_rratio 0.192308)
-			(net 18 "cde_EV1")
+			(net 18 "cmd_EV1")
 			(pintype "passive")
 			(uuid "19255c1d-f3b0-458b-9868-3ea2adddbfdd")
 		)
@@ -11383,7 +11390,7 @@
 		)
 	)
 	(gr_text "230V AC"
-		(at 215.1 139.4 0)
+		(at 195.8 139.24 0)
 		(layer "F.SilkS")
 		(uuid "07f77e2c-b975-4562-a829-3a4a050b4829")
 		(effects
@@ -11408,6 +11415,18 @@
 			(justify left bottom)
 		)
 	)
+	(gr_text "GND"
+		(at 98.1 94.85 0)
+		(layer "F.SilkS")
+		(uuid "1ce67dcb-77a5-4a55-9ed2-63d37a17f07b")
+		(effects
+			(font
+				(size 0.6 0.6)
+				(thickness 0.1)
+			)
+			(justify left bottom)
+		)
+	)
 	(gr_text "+12V"
 		(at 147.6 131.6 0)
 		(layer "F.SilkS")
@@ -11422,7 +11441,7 @@
 		)
 	)
 	(gr_text "SWITCHS"
-		(at 108.74 93.93 90)
+		(at 108.5 93.6 90)
 		(layer "F.SilkS")
 		(uuid "5390f25c-f76b-49ec-9f6d-5fe5fb4506d9")
 		(effects
@@ -11430,6 +11449,18 @@
 				(size 1 1)
 				(thickness 0.2)
 				(bold yes)
+			)
+			(justify left bottom)
+		)
+	)
+	(gr_text "+3.3V"
+		(at 113 135.9 0)
+		(layer "F.SilkS")
+		(uuid "6c0de6d0-d3b5-4969-8e36-55d06dfc6db6")
+		(effects
+			(font
+				(size 0.6 0.6)
+				(thickness 0.15)
 			)
 			(justify left bottom)
 		)
@@ -11486,7 +11517,7 @@
 		)
 	)
 	(gr_text "pump"
-		(at 194.3 139.1 0)
+		(at 178.7 139.1 0)
 		(layer "F.SilkS")
 		(uuid "ae7f41e4-1f17-4cac-bbe0-d6b6741437d0")
 		(effects
@@ -11524,7 +11555,7 @@
 		)
 	)
 	(gr_text "EV1"
-		(at 145.2 131.9 0)
+		(at 145.2 131.8 0)
 		(layer "B.SilkS")
 		(uuid "cc667ffa-f082-4be1-9ff7-006bc868a39c")
 		(effects
@@ -11548,7 +11579,7 @@
 		)
 	)
 	(gr_text "EV3"
-		(at 135.2 131.7 0)
+		(at 135.2 131.8 0)
 		(layer "B.SilkS")
 		(uuid "fee43b8a-a8bb-4f9e-9093-8ab27ca077ef")
 		(effects

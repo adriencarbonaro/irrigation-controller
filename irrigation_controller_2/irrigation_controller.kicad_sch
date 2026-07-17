@@ -6,13 +6,13 @@
 	(paper "A4")
 	(title_block
 		(title "Irrigation controller - 3 channels")
-		(date "2026-07-08")
-		(rev "1.0")
+		(date "2026-07-13")
+		(rev "1.1")
 		(company "O.Carbonaro")
-		(comment 1 "0.6: tested design, 3 EVs only")
-		(comment 2 "0.8: SW and LED removed from the board")
-		(comment 3 "0.9: adjustements for pcb routing")
-		(comment 4 "1.0: transfered to production")
+		(comment 1 "0.8: SW and LED removed from the board")
+		(comment 2 "0.9: adjustements for pcb routing")
+		(comment 3 "1.0: transfered to production")
+		(comment 4 "1.1: minor adjustments on label names")
 	)
 	(lib_symbols
 		(symbol "Carbonaro:FULARR_MP1584EN"
@@ -3738,7 +3738,7 @@
 		)
 		(uuid "d7945b79-1866-40e6-89e8-b212f90e4671")
 	)
-	(text "Buttons "
+	(text "Switchs"
 		(exclude_from_sim no)
 		(at 131.826 145.034 0)
 		(effects
@@ -4988,7 +4988,7 @@
 		)
 		(uuid "fed6a8e8-5d1d-4b4c-9bea-1f11d531ac5f")
 	)
-	(global_label "cde_EV1"
+	(global_label "cmd_EV1"
 		(shape input)
 		(at 60.96 43.18 180)
 		(fields_autoplaced yes)
@@ -5000,7 +5000,7 @@
 		)
 		(uuid "04fb4c74-988d-439b-86c2-091fee3393c2")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 50.2339 43.18 0)
+			(at 49.6292 43.18 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5252,7 +5252,7 @@
 			)
 		)
 	)
-	(global_label "cde_EV3"
+	(global_label "cmd_EV3"
 		(shape input)
 		(at 60.96 102.87 180)
 		(fields_autoplaced yes)
@@ -5264,7 +5264,7 @@
 		)
 		(uuid "7506061f-64ec-46e1-921c-b1100ce37835")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 50.2339 102.87 0)
+			(at 49.6292 102.87 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5318,7 +5318,7 @@
 			)
 		)
 	)
-	(global_label "cde_EV2"
+	(global_label "cmd_EV2"
 		(shape output)
 		(at 176.53 41.91 180)
 		(fields_autoplaced yes)
@@ -5330,7 +5330,7 @@
 		)
 		(uuid "96178ca8-fb2e-4189-9222-0a5a0d01ca41")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 165.8039 41.91 0)
+			(at 165.1992 41.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5406,7 +5406,7 @@
 			)
 		)
 	)
-	(global_label "pump_cde"
+	(global_label "pump_cmd"
 		(shape output)
 		(at 176.53 49.53 180)
 		(fields_autoplaced yes)
@@ -5418,7 +5418,7 @@
 		)
 		(uuid "a49db99d-7dbb-4be5-a829-13eed178ff4c")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 164.1107 49.53 0)
+			(at 163.506 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5428,7 +5428,7 @@
 			)
 		)
 	)
-	(global_label "pump_cde"
+	(global_label "pump_cmd"
 		(shape input)
 		(at 186.69 110.49 180)
 		(fields_autoplaced yes)
@@ -5440,7 +5440,7 @@
 		)
 		(uuid "a51dfed4-5fc1-4cbe-8f68-10e10be258df")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 174.2707 110.49 0)
+			(at 173.666 110.49 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5516,7 +5516,7 @@
 			)
 		)
 	)
-	(global_label "cde_EV3"
+	(global_label "cmd_EV3"
 		(shape output)
 		(at 176.53 45.72 180)
 		(fields_autoplaced yes)
@@ -5528,7 +5528,7 @@
 		)
 		(uuid "cb864a87-731f-4e07-9ea0-b036a5994087")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 165.8039 45.72 0)
+			(at 165.1992 45.72 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5604,7 +5604,7 @@
 			)
 		)
 	)
-	(global_label "cde_EV1"
+	(global_label "cmd_EV1"
 		(shape output)
 		(at 176.53 38.1 180)
 		(fields_autoplaced yes)
@@ -5616,7 +5616,7 @@
 		)
 		(uuid "e467e0b9-3d9d-4cd9-8b55-2bb238c8dcb1")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 165.8039 38.1 0)
+			(at 165.1992 38.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5626,7 +5626,7 @@
 			)
 		)
 	)
-	(global_label "cde_EV2"
+	(global_label "cmd_EV2"
 		(shape input)
 		(at 60.96 72.39 180)
 		(fields_autoplaced yes)
@@ -5638,7 +5638,7 @@
 		)
 		(uuid "e7b7d7e2-fa67-4842-8789-b07c42fea171")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 50.2339 72.39 0)
+			(at 49.6292 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
