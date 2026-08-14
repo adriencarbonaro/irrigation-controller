@@ -12,11 +12,11 @@ Home Assistant controls the watering sequences
 ## Features
 ### On the irrigation controller: 
 - water inlet : one 3/4" connection, on the right side
-- water outlets : 1, 2 or 3 3/4" connection,  facing downward
+- water outlets : 1, 2 or 3 3/4" connections,  facing downward
 - for each outlet:
     - a manual control button (all 3 valves can be opened at the same time)
     - a LED that lights up when the valve is open
-
+- a security timeout turns off valves after _EV_timeout_ minutes of activation
 - status LED blinks when WiFi is connected
 - controller is AC 230V powered 
 
@@ -29,7 +29,6 @@ The behavior of each zone is defined in Home Assistant with the following parame
 - duration: duration in mn [1 to 15] of the watering
 - a button to manually operate the zone (immediate start on 1st push, immediate stop on 2nd push)  
 
-
 Sequence definition : at start time, zone 1 is operated for the given duration if activated, then zone 2, then zone 3
 
 
@@ -40,9 +39,9 @@ Sequence definition : at start time, zone 1 is operated for the given duration i
 
 Schematic & Pcb design using KiCad 9
 
-- Microcrontroller : Seeed Studio XIAO esp32-C3
-- 12 solenoid valve control : power MOSFET IRFZ24N (55V 17A)
-- Submerged pump 230V : Triac BT136-600
+- Microcrontroller: Seeed Studio XIAO esp32-C3
+- 12 solenoid valve control: power MOSFET IRFZ24N (55V 17A)
+- Submerged pump control: 230V Triac BT136-600
 
 **Final design**
 Pcb dimensions 148 x 61 mm, 4 mounting holes (141,4 x 45 mm)
@@ -59,36 +58,44 @@ Yet to come
 ### Hydraulic
 - Inlet : 3/4" (20/27) for automatic garden connection
 - Output : 3/4"  (20/27) for automatic garden connection
-- solenoid valves : 12V DC NC, 0.02 - 0.8 MPa, 1/2" (15/21) solenoid valve, type machine à laver
+- solenoid valves : 12V DC NC, 0.02 - 0.8 MPa, 1/2" (15/21) solenoid valve, from washing machine
 - 14 mm copper pipes
 
 ![](./Photos/Prototype_partie_hydraulique.jpg)
 
-## Software
-
+## Firmware
 - esp32 module manages 
     - gpios 
-    - a script to drive solenoid valves and the immmerged pump
-    - a safety timeout to stop watering in case HA is disconnected durong a watering sequence
-- HA manage irrigations sequences and manual control through a card in "Jardin" dashboard
+    - a script to drive solenoid valves and the submerged pump
+    - a safety timeout to stop watering in case HA is disconnected during a watering sequence
+- HA manage irrigations sequences and manual control through a card in the "garden" dashboard
 
 ### ESPHome firmware
 binary sensor:  
-- **GPIO8, GPIO9, GPIO10** : SW3, SW2, SW1 (must be high at boot)  
+- SW3, SW2, SW1 (must be high at boot) : manual command on the device
 
-switch:  
-- **GPIO3, GPIO4, GPIO5** : EV1, EV2, EV3  
-- **GPIO6** : pump control  
-- **GPIO20** : status LED  
+switch:  ON/OFF command 
+- EV1, EV2, EV3  : the 3 solenoid valves command
+- pump control  : submerged pump command
+
+output:
+- status LED  (HIGH side command)
+
+sensor:
+- WiFi RSSI in dBm
 
 button:  
-3 virtual buttons to manually control EV1, EV2 and EV3 in HA 
+- 3 virtual buttons to manually control EV1, EV2 and EV3 in HA 
 
-wifi : automatically connects to the 3 possible WiFi routers of the home
+wifi : 
+- automatically connects to the 3 possible WiFi routers of the home
+
+light:
+(The binary light platform creates a simple ON/OFF-only light from a binary output component.)
+- **led_status**: blinks the status LED according to LED_ON (100 ms) and LED_OFF (5000 ms)  
 
 script :
-- **blink LED**: blinks the status LED according to LED_ON (100 ms) and LED_OFF (5000 ms)  
-- **toggle_EV1, toggle_EV2, toggle EV3**: turn on and off the given solenoid valve ; turn on immerged pump when at least one valve is on, and off when all valves are off  
+- **toggle_EV1, toggle_EV2, toggle EV3**: turn on and off the given solenoid valve ; turn on immerged pump when at least one valve is on, and off when all valves are off ; launch security timeout  
 - **valves_security_timeout**: turns off every command after EV_timeout (typically 30mn)  
 
 ### Home Assistant configuration
@@ -100,10 +107,9 @@ All elements linked to the irrigation controller are found under the label "irri
 
 #### Entities
 Actionnable entities are 
-- commande_EVi: execute script toggle_EVi
-- LED: switch_toggle status LED
+- EVi command: execute script toggle_EVi
 - pump: switch_toggle pump
-- valvei: switch_toggle valve i
+- EVi: switch_toggle solenoid valve i
 
 #### Helpers
 - common to all zones:
@@ -120,4 +126,5 @@ Actionnable entities are
 - Démarrage irrigation : at "irrigation_heure_debut", execute script "lancer_goutteAgoutte_1" if "irrigation_auto" set to true
 
 #### dashboard
-- yet to come
+a) 2 valves version
+![](./Photos/irrigation_controller_HAdashboard.png)
