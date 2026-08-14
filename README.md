@@ -38,15 +38,23 @@ Sequence definition : at start time, zone 1 is operated for the given duration i
 
 ![](./Photos/irrigation_controller_sch.jpg)
 
+Schematic & Pcb design using KiCad 9
+
 - Microcrontroller : Seeed Studio XIAO esp32-C3
 - 12 solenoid valve control : power MOSFET IRFZ24N (55V 17A)
 - Submerged pump 230V : Triac BT136-600
 
-Pcb design using KiCad 9
+**Final design**
 Pcb dimensions 148 x 61 mm, 4 mounting holes (141,4 x 45 mm)
-
-
 ![](./Photos/irrigation_controller.png)
+
+**Various configurations are available**
+a) 2 valves + 1 pump  
+![](./Photos/irrigation_controller_2valves&pump.jpg)
+D5 LED (= TRIAC is active) is optionnal 
+
+b) 3 valves, no pump  
+Yet to come
 
 ### Hydraulic
 - Inlet : 3/4" (20/27) for automatic garden connection

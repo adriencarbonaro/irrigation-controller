@@ -1,0 +1,192 @@
+# Board: Generic ESP32-C3 Board (Generic)
+# Definition: definitions/boards/generic-esp32c3/manifest.yaml
+# V0.9.0 : prototype version
+
+# module specific parameters
+substitutions:
+  nom_appareil: irrigation-ctrl1
+  nom_friendly: irrigation_ctrl1
+  nom_projet: OC.irrigation_controller_V1
+  version: "0.9.0"
+  LED_ON: "100"
+  LED_OFF: "5000"
+  EV_timeout: "30"
+
+globals:
+  - type: bool
+    id: ev1_active
+    initial_value: "false"
+  - type: bool
+    id: ev2_active
+    initial_value: "false"
+    
+esphome:
+  name: ${nom_appareil}
+  friendly_name: ${nom_friendly}
+  project:
+    name: ${nom_projet}
+    version: ${version}
+  on_loop:
+    - then:
+        - script.execute: blink_LED
+esp32:
+  variant: ESP32C3
+  framework:
+    type: esp-idf
+
+logger:
+
+api:
+  encryption:
+    key: "pxbvuG+20dlxeLNGQ+HZN8x13qUB9Y79AQnYE4bcN6g="
+
+ota:
+  - platform: esphome
+
+wifi:
+  ap:
+    ssid: irrigation_cont Fallback Hotspot
+    password: "si6GjbceibFG"
+
+  networks:
+    - id: maison
+      ssid: !secret wifi_maison_ssid
+      password: !secret wifi_password
+    - id: poules
+      ssid: !secret wifi_poules_ssid
+      password: !secret wifi_password
+    - id: atelier
+      ssid: !secret wifi_atelier_ssid
+      password: !secret wifi_password
+captive_portal:
+
+sensor:
+# mesure wifi RSSI in dBm
+  - platform: wifi_signal
+    name: "RSSI WiFi"
+    id: wifi_signal_db
+    update_interval: 60s
+    entity_category: diagnostic
+    icon: "mdi:signal"
+    
+switch:
+# irrigation solenoid valve 1 control
+  - platform: gpio
+    name: valve1
+    pin: GPIO3
+    id: switch_valve1
+# irrigation solenoid valve 2 control
+  - platform: gpio
+    name: valve2
+    pin: GPIO4
+    id: switch_valve2
+  # pump control
+  - platform: gpio
+    name: pump
+    pin: GPIO5
+    id: switch_pump
+  # Status LED
+  - platform: gpio
+    name: LED
+    pin: GPIO20
+    id: switch_LED
+    
+binary_sensor:
+  # EV1 manual control button
+  - platform: gpio
+    name: bouton1
+    pin:  GPIO8
+    id: button_EV1
+    filters:
+      - invert:
+    on_click:
+      - then:
+          - script.execute: toggle_EV1
+  # EV2 manual control button
+  - platform: gpio
+    name: bouton2
+    pin: GPIO9
+    id: button_EV2
+    filters:
+      - invert:
+    on_click:
+      - then:
+          - script.execute: toggle_EV2
+
+button:
+  # virtual button ton manually control EV1 in HA
+  - platform: template
+    name: Commande EV1
+    id: button_control_EV1
+    on_press:
+      - then:
+          - script.execute: toggle_EV1
+  # virtual button ton manually control EV2 in HA            
+  - platform: template
+    name: Commande EV2
+    id: button_control_EV2
+    on_press:
+      - then:
+          - script.execute: toggle_EV2  
+            
+script:
+  # Blink LED 
+  - id: blink_LED
+    mode: single
+    then:
+      - switch.turn_on: switch_LED
+      - delay:
+          milliseconds: ${LED_ON}
+      - switch.turn_off: switch_LED
+      - delay:
+          milliseconds: ${LED_OFF}
+          
+    # EV1 + pump control 
+    # - toggles EV1
+    # - if at least one EV is active, turn on pump and launch securityt timeout
+  - id: toggle_EV1
+    mode: single
+    then:
+      - lambda: |
+          id(ev1_active) = !id(ev1_active);
+      - switch.toggle: switch_valve1
+      - if:
+          condition:
+            lambda: |
+              return id(ev1_active)|id(ev2_active);
+          then:
+            - switch.turn_on: switch_pump
+            - script.execute: valves_security_timeout
+          else:
+            - switch.turn_off: switch_pump
+            - script.stop: valves_security_timeout
+              
+    # EV2 + pump control 
+    # - toggles EV2
+    # - if at least one EV is active, turn on pump and launch securityt timeout
+  - id: toggle_EV2
+    mode: single
+    then:
+      - lambda: |
+          id(ev2_active) = !id(ev2_active);
+      - switch.toggle: switch_valve2
+      - if:
+          condition:
+            lambda: |
+              return id(ev1_active)|id(ev2_active);
+          then:
+            - switch.turn_on: switch_pump
+            - script.execute: valves_security_timeout
+          else:
+            - switch.turn_off: switch_pump
+            - script.stop: valves_security_timeout
+
+    # security timeout: turns off every command after EV_timeout
+  - id: valves_security_timeout
+    mode : restart
+    then:
+      - delay:
+          minutes: ${EV_timeout}
+      - switch.turn_off: switch_valve1
+      - switch.turn_off: switch_valve2
+      - switch.turn_off: switch_pump

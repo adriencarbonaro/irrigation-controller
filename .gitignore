@@ -1,5 +1,6 @@
 # ide config
 .vscode/
+.gitignore
 
 # build files
 

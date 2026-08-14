@@ -5,7 +5,7 @@
       "Application": "Pcbnew",
       "Version": "9.0.2+dfsg-1"
     },
-    "CreationDate": "2026-07-13T15:29:16+02:00"
+    "CreationDate": "2026-07-21T12:36:34+02:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
@@ -62,6 +62,16 @@
       "Path": "irrigation_controller-B_Silkscreen.gbr",
       "FileFunction": "Legend,Bot",
       "FilePolarity": "Positive"
+    },
+    {
+      "Path": "irrigation_controller-F_Mask.gbr",
+      "FileFunction": "SolderMask,Top",
+      "FilePolarity": "Negative"
+    },
+    {
+      "Path": "irrigation_controller-B_Mask.gbr",
+      "FileFunction": "SolderMask,Bot",
+      "FilePolarity": "Negative"
     },
     {
       "Path": "irrigation_controller-User_Comments.gbr",
