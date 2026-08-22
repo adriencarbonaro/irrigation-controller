@@ -21,13 +21,15 @@ Home Assistant controls the watering sequences
 - controller is AC 230V powered 
 
 ### In Home assistant:
-A button makes the controller active (watering according to zone paramters) or inactive (no watering)
+A button makes the controller active (watering according to zone parameters) or inactive (no watering)
 Start_time : HH/MM [0:00 to 23:59] when the watering sequence shall start
 The behavior of each zone is defined in Home Assistant with the following parameters:
 - availability: true if zone is used, false if not used
 - days of week: frequency of watering _(to be added)_
 - duration: duration in mn [1 to 15] of the watering
+- frequency: 1 cycle (every 24h), 2 cycles (every 12h), 3 cycles (every 6h)_(to be added)_
 - a button to manually operate the zone (immediate start on 1st push, immediate stop on 2nd push)  
+- pluviometer: disable the watering sequence when raining _(to be added)_
 
 Sequence definition : at start time, zone 1 is operated for the given duration if activated, then zone 2, then zone 3
 
@@ -73,6 +75,7 @@ Yet to come
 ### ESPHome firmware
 binary sensor:  
 - SW3, SW2, SW1 (must be high at boot) : manual command on the device
+- ev1_active, ev2_active: provides HA with actual status of the solenoid valves
 
 switch:  ON/OFF command 
 - EV1, EV2, EV3  : the 3 solenoid valves command
@@ -127,4 +130,10 @@ Actionnable entities are
 
 #### dashboard
 a) 2 valves version
+-  Mode Auto : makes the controller active (watering according to zone parameters) or inactive (no watering)
+- Heure Debut : start time of the xatering sequence
+- Zone 1, Zone 2 : a click manually start the watering of the selected zone. A second click stop the watering. When watering is on, the icon changes to color red.
+- Activé/Desactivé: if activated, the zone will be selected in the waterng sequence
+- Duration : automatic watering duration from 1mn to 15mn
 ![](./Photos/irrigation_controller_HAdashboard.png)
+

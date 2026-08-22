@@ -8,9 +8,12 @@
 
 # sdk
 
+# datasheets
+datasheets
 
 # hardware
-Dossier_de_conception/
+dossier_de_conception/
 irrigation_controller-backups
 *.pdf
 *.gbr
+*.xlsx
