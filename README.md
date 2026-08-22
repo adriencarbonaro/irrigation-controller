@@ -37,7 +37,7 @@ Sequence definition : at start time, zone 1 is operated for the given duration i
 ## Hardware
 ### Electronic
 
-![](./photos/irrigation_controller_sch.jpg)
+![](./photos/irrigation_controller_schematic.jpg)
 
 Schematic & Pcb design using KiCad 9
 
@@ -47,11 +47,11 @@ Schematic & Pcb design using KiCad 9
 
 **Final design**
 Pcb dimensions 148 x 61 mm, 4 mounting holes (141,4 x 45 mm)
-![](./photos/irrigation_controller.png)
+![](./photos/irrigation_controller_Board_design.png)
 
 **Various configurations are available**
 a) 2 valves + 1 pump  
-![](./photos/irrigation_controller_2valves&pump.jpg)
+![](./photos/irrigation_controller_2valves&pump_board.jpg)
 D5 LED (= TRIAC is active) is optionnal 
 
 b) 3 valves, no pump  
@@ -63,7 +63,7 @@ Yet to come
 - solenoid valves : 12V DC NC, 0.02 - 0.8 MPa, 1/2" (15/21) solenoid valve, from washing machine
 - 14 mm copper pipes
 
-![](./photos/Prototype_partie_hydraulique.jpg)
+![](./photos/Prototype_hydraulic_subset.jpg)
 
 ## Firmware
 - esp32 module manages 
@@ -134,6 +134,7 @@ a) 2 valves version
 - Heure Debut : start time of the xatering sequence
 - Zone 1, Zone 2 : a click manually start the watering of the selected zone. A second click stop the watering. When watering is on, the icon changes to color red.
 - Activé/Desactivé: if activated, the zone will be selected in the waterng sequence
-- Duration : automatic watering duration from 1mn to 15mn
+- Duration : automatic watering duration from 1mn to 15mn  
+
 ![](./photos/irrigation_controller_HAdashboard.png)
 
