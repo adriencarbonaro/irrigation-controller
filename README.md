@@ -37,6 +37,16 @@ Sequence definition: at the start time, zone 1 is operated for the given duratio
 
 
 ## Hardware
+
+### 🙌 Sponsor
+Huge thanks to PCBWay for sponsoring the PCB manufacturing for this project. Their support, help and advices helped make this project physically real.
+
+If you're looking for high-quality PCB fabrication or assembly services, check them out:
+
+👉 https://www.pcbway.com
+
+![](./photos/pcbway_logo.png)
+
 ### Electronics
 
 ![](./photos/irrigation_controller_schematic.jpg)
