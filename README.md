@@ -3,138 +3,139 @@
 ## Overview
 This controller is used to remotely control a drip irrigation system.  
 
-It controls up to 3 irrigation zones and optionnally a submersible pump
+It controls up to 3 irrigation zones and, optionally, a submersible pump.
 
-Home Assistant controls the watering sequences
-- activation of the irrigation controller, programmable start time of the irrigation sequence 
-- behavior of each zone(availaibility and watering duration)  
+Home Assistant controls the watering sequences:
+- activation of the irrigation controller, programmable start time of the irrigation sequence
+- behavior of each zone (availability and watering duration)  
 
 ## Features
-### On the irrigation controller: 
-- water inlet : one 3/4" connection, on the right side
-- water outlets : 1, 2 or 3 3/4" connections,  facing downward
+### On the irrigation controller
+- water inlet: one 3/4" connection, on the right side
+- water outlets: 1, 2, or 3 × 3/4" connections, facing downward
 - for each outlet:
     - a manual control button (all 3 valves can be opened at the same time)
     - a LED that lights up when the valve is open
-- a security timeout turns off valves after _EV_timeout_ minutes of activation
-- status LED blinks when WiFi is connected
-- controller is AC 230V powered 
+- a safety timeout turns off the valves after _EV_timeout_ minutes of activation
+- the status LED blinks when WiFi is connected
+- the controller is powered from 230 V AC
 
-### In Home assistant:
-A button makes the controller active (watering according to zone parameters) or inactive (no watering)
-Start_time : HH/MM [0:00 to 23:59] when the watering sequence shall start
+### In Home Assistant
+A button makes the controller active (watering according to the zone parameters) or inactive (no watering).
+
+Start time: HH:MM [0:00 to 23:59], when the watering sequence shall start.
+
 The behavior of each zone is defined in Home Assistant with the following parameters:
-- availability: true if zone is used, false if not used
+- availability: true if the zone is used, false if it is not used
 - days of week: frequency of watering _(to be added)_
-- duration: duration in mn [1 to 15] of the watering
-- frequency: 1 cycle (every 24h), 2 cycles (every 12h), 3 cycles (every 6h)_(to be added)_
-- a button to manually operate the zone (immediate start on 1st push, immediate stop on 2nd push)  
-- pluviometer: disable the watering sequence when raining _(to be added)_
+- duration: watering duration in minutes [1 to 15]
+- frequency: 1 cycle (every 24h), 2 cycles (every 12h), 3 cycles (every 6h) _(to be added)_
+- a button to manually operate the zone (immediate start on the 1st push, immediate stop on the 2nd push)  
+- rain sensor: disables the watering sequence while it is raining _(to be added)_
 
-Sequence definition : at start time, zone 1 is operated for the given duration if activated, then zone 2, then zone 3
+Sequence definition: at the start time, zone 1 is operated for the given duration if it is activated, then zone 2, then zone 3.
 
 
 ## Hardware
-### Electronic
+### Electronics
 
 ![](./photos/irrigation_controller_schematic.jpg)
 
-Schematic & Pcb design using KiCad 9
+Schematic & PCB designed using KiCad 9
 
-- Microcrontroller: Seeed Studio XIAO esp32-C3
-- 12 solenoid valve control: power MOSFET IRFZ24N (55V 17A)
-- Submerged pump control: 230V Triac BT136-600
+- Microcontroller: Seeed Studio XIAO ESP32-C3
+- 12 V solenoid valve control: power MOSFET IRFZ24N (55 V, 17 A)
+- Submersible pump control: 230 V Triac BT136-600
 
 **Final design**
-Pcb dimensions 148 x 61 mm, 4 mounting holes (141,4 x 45 mm)
+PCB dimensions 148 × 61 mm, 4 mounting holes (141.4 × 45 mm)
 ![](./photos/irrigation_controller_Board_design.png)
 
 **Various configurations are available**
 a) 2 valves + 1 pump  
 ![](./photos/irrigation_controller_2valves&pump_board.jpg)
-D5 LED (= TRIAC is active) is optionnal 
+The D5 LED (= TRIAC is active) is optional.
 
 b) 3 valves, no pump  
 Yet to come
 
 ### Hydraulic
-- Inlet : 3/4" (20/27) for automatic garden connection
-- Output : 3/4"  (20/27) for automatic garden connection
-- solenoid valves : 12V DC NC, 0.02 - 0.8 MPa, 1/2" (15/21) solenoid valve, from washing machine
+- Inlet: 3/4" (20/27) for an automatic garden connection
+- Outlet: 3/4" (20/27) for an automatic garden connection
+- solenoid valves: 12 V DC, NC, 0.02 - 0.8 MPa, 1/2" (15/21) solenoid valve, from a washing machine
 - 14 mm copper pipes
 
 ![](./photos/Prototype_hydraulic_subset.jpg)
 
 ## Firmware
-- esp32 module manages 
-    - gpios 
-    - a script to drive solenoid valves and the submerged pump
+- The ESP32 module manages
+    - the GPIOs
+    - a script to drive the solenoid valves and the submersible pump
     - a safety timeout to stop watering in case HA is disconnected during a watering sequence
-- HA manage irrigations sequences and manual control through a card in the "garden" dashboard
+- HA manages the irrigation sequences and the manual control through a card in the "garden" dashboard
 
 ### ESPHome firmware
 binary sensor:  
-- SW3, SW2, SW1 (must be high at boot) : manual command on the device
-- ev1_active, ev2_active: provides HA with actual status of the solenoid valves
+- SW3, SW2, SW1 (must be high at boot): manual command on the device
+- ev1_active, ev2_active: provide HA with the actual status of the solenoid valves
 
-switch:  ON/OFF command 
-- EV1, EV2, EV3  : the 3 solenoid valves command
-- pump control  : submerged pump command
+switch: ON/OFF command
+- EV1, EV2, EV3: commands for the 3 solenoid valves
+- pump control: submersible pump command
 
 output:
-- status LED  (HIGH side command)
+- status LED (HIGH side command)
 
 sensor:
 - WiFi RSSI in dBm
 
 button:  
-- 3 virtual buttons to manually control EV1, EV2 and EV3 in HA 
+- 3 virtual buttons to manually control EV1, EV2 and EV3 in HA
 
-wifi : 
-- automatically connects to the 3 possible WiFi routers of the home
+wifi:
+- automatically connects to any of the 3 WiFi routers in the home
 
 light:
 (The binary light platform creates a simple ON/OFF-only light from a binary output component.)
-- **led_status**: blinks the status LED according to LED_ON (100 ms) and LED_OFF (5000 ms)  
+- **led_status**: blinks the status LED according to LED_ON (100 ms) and LED_OFF (4900 ms)  
 
-script :
-- **toggle_EV1, toggle_EV2, toggle EV3**: turn on and off the given solenoid valve ; turn on immerged pump when at least one valve is on, and off when all valves are off ; launch security timeout  
-- **valves_security_timeout**: turns off every command after EV_timeout (typically 30mn)  
+script:
+- **toggle_EV1, toggle_EV2, toggle_EV3**: turn the given solenoid valve on and off; turn on the submersible pump when at least one valve is on, and turn it off when all valves are off; launch the safety timeout  
+- **valves_safety_timeout**: turns off every command after EV_timeout (typically 30 min)  
 
 ### Home Assistant configuration
 
-All elements linked to the irrigation controller are found under the label "irrigation"
+All the elements linked to the irrigation controller are found under the label "irrigation".
 
 #### Device
-- add "irrigation_ctl1" in appareils & service /ESPHome"
+- add "irrigation_ctl1" under Settings → Devices & Services → ESPHome
 
 #### Entities
-Actionnable entities are 
-- EVi command: execute script toggle_EVi
-- pump: switch_toggle pump
-- EVi: switch_toggle solenoid valve i
+The actionable entities are:
+- EVi command: executes the script `toggle_EVi`
+- pump: `switch_toggle` pump
+- EVi: `switch_toggle` solenoid valve i
 
 #### Helpers
 - common to all zones:
-        - irrigation_auto: to enable the automatic watering program
-        - irrigation_heure_debut: watering start time
-- for ach zone (i = 1, 2 or 3)
-        - irrigation_active_zonei: to enable watering progm on zone i
-        - irrigation_duree_zonei: watering suration of zone i
+  - `irrigation_auto`: enables the automatic watering program
+  - `irrigation_heure_debut` (watering start time): the time at which watering starts
+- for each zone (i = 1, 2 or 3):
+  - `irrigation_active_zonei`: enables the watering program on zone i
+  - `irrigation_duree_zonei` (watering duration zonei): the watering duration of zone i
 
-#### script
-- lancer_goutteAgoutte_1: execute "commande_EVi" if "irrigation_active_zonei" is true for "irrigation_duree_zonei"
+#### Script
+- `lancer_goutteAgoutte_1` (run drip irrigation): executes `commande_EVi` if `irrigation_active_zonei` is true, for the duration `irrigation_duree_zonei`
 
-#### automation
-- Démarrage irrigation : at "irrigation_heure_debut", execute script "lancer_goutteAgoutte_1" if "irrigation_auto" set to true
+#### Automation
+- `Démarrage irrigation` (Start irrigation): at `irrigation_heure_debut`, executes the script `lancer_goutteAgoutte_1` if `irrigation_auto` is set to true
 
-#### dashboard
-a) 2 valves version
--  Mode Auto : makes the controller active (watering according to zone parameters) or inactive (no watering)
-- Heure Debut : start time of the xatering sequence
-- Zone 1, Zone 2 : a click manually start the watering of the selected zone. A second click stop the watering. When watering is on, the icon changes to color red.
-- Activé/Desactivé: if activated, the zone will be selected in the waterng sequence
-- Duration : automatic watering duration from 1mn to 15mn  
+#### Dashboard
+a) 2 valves version, french language
+- Mode Auto ('Auto mode'): makes the controller active (watering according to the zone parameters) or inactive (no watering)
+- Heure Début ('Start time'): the start time of the watering sequence
+- Zone 1, Zone 2: a single click manually starts the watering of the selected zone. A second click stops the watering. While watering is on, the icon turns red.
+- Activé/desactivé ('Enabled/Disabled'): if enabled, the zone is included in the watering sequence
+- Duration: automatic watering duration, from 1 min to 15 min  
 
 ![](./photos/irrigation_controller_HAdashboard.png)
-

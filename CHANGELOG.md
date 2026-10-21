@@ -19,7 +19,11 @@ Types of changes : Added, Changed, Deprecated, Removed, Fixed, Security
 ### To be Fixed
 
 -----------------------------------------------------------------------------------------------  
-## [1.0.1] - 2026-08-22
+# [1.1.1] - 2026-10-21
+### Changed
+- label update (valves_security_timeout -> valves_safety_timeout)
+
+## [1.1.0] - 2026-08-22
 ### Added
   -  binary sensors ev1_active and ev2_active exposes actual state of the solenoid valves to HA. This allow HA dashboard to change the aspect of the Zone 1, Zone 2 command buttons (red when open, grey if closed)
 
